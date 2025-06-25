@@ -5,8 +5,10 @@ members = [
 "exercises/fibonacci_number_exercise",
 "exercises/grep_exercise",
 "exercises/multithreaded_server_exercise",
+"exercises/clap_exercise",
 "solutions/guess_number_solution",
 "solutions/fibonacci_number_solution",
 "solutions/grep_solution",
-"solutions/multithreaded_server_solution", "exercises/guessing_game",
+"solutions/multithreaded_server_solution",  
+"solutions/clap_solution",
 ]

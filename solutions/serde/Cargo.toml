@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "file_json",
+    "file_bson",
+    "vec_json",
+    "vec_ron",
+    "vec_bson"
+    ]
+
+resolver = "3"  # Enable the resolver that matches edition 2024
