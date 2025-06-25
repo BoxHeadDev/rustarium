@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = [
+"exercises/guess_number_exercise",
+"exercises/fibonacci_number_exercise",
+"exercises/grep_exercise",
+"exercises/multithreaded_server_exercise",
+"solutions/guess_number_solution",
+"solutions/fibonacci_number_solution",
+"solutions/grep_solution",
+"solutions/multithreaded_server_solution", "exercises/guessing_game",
+]
