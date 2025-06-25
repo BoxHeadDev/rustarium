@@ -10,5 +10,5 @@ members = [
 "solutions/fibonacci_number_solution",
 "solutions/grep_solution",
 "solutions/multithreaded_server_solution",  
-"solutions/clap_solution",
+"solutions/clap_solution", "solutions/chat/epoll-client", "solutions/chat/epoll-server", "solutions/chat/io-uring-server", "solutions/chat/io-uring-client", "solutions/chat/futures-client", "solutions/chat/futures-server", "solutions/chat/state-machine-server", "solutions/chat/state-machine-client", "solutions/chat/callbacks-client", "solutions/chat/callbacks-server", "solutions/chat/threads-server", "solutions/chat/threads-client", "solutions/chat/blocking-client", "solutions/chat/blocking-server",
 ]

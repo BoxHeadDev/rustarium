@@ -1,0 +1,9 @@
+[package]
+name = "futures-client-solution"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+async-std = "1.12"
+futures = "0.3"
+
