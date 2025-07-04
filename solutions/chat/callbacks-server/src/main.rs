@@ -8,9 +8,9 @@ type ClientMap = Arc<Mutex<HashMap<String, TcpStream>>>;
 
 struct ChatServer {
     clients: ClientMap,
-    on_connect: Box<dyn Fn(&str) + Send + Sync>,
-    on_message: Box<dyn Fn(&str, &str) + Send + Sync>,
-    on_disconnect: Box<dyn Fn(&str) + Send + Sync>,
+    on_connect: Arc<Box<dyn Fn(&str) + Send + Sync>>,
+    on_message: Arc<Box<dyn Fn(&str, &str) + Send + Sync>>,
+    on_disconnect: Arc<Box<dyn Fn(&str) + Send + Sync>>,
 }
 
 impl ChatServer {
@@ -22,9 +22,9 @@ impl ChatServer {
     {
         ChatServer {
             clients: Arc::new(Mutex::new(HashMap::new())),
-            on_connect: Box::new(on_connect),
-            on_message: Box::new(on_message),
-            on_disconnect: Box::new(on_disconnect),
+            on_connect: Arc::new(Box::new(on_connect)),
+            on_message: Arc::new(Box::new(on_message)),
+            on_disconnect: Arc::new(Box::new(on_disconnect)),
         }
     }
 
@@ -32,50 +32,43 @@ impl ChatServer {
         let listener = TcpListener::bind(addr).expect("Failed to bind address");
         println!("Chat server running on {}", addr);
 
-        for stream in listener.incoming() {
-            if let Ok(stream) = stream {
-                let mut reader = BufReader::new(stream.try_clone().unwrap());
-                let mut name = String::new();
-                if reader.read_line(&mut name).is_err() {
-                    continue;
-                }
-                let name = name.trim().to_string();
+        for stream in listener.incoming().flatten() {
+            let mut reader = BufReader::new(stream.try_clone().unwrap());
+            let mut name = String::new();
+            if reader.read_line(&mut name).is_err() {
+                continue;
+            }
+            let name = name.trim().to_string();
 
-                (self.on_connect)(&name);
+            (self.on_connect)(&name);
 
+            {
                 let mut clients = self.clients.lock().unwrap();
                 clients.insert(name.clone(), stream.try_clone().unwrap());
-                drop(clients);
+            }
 
-                let clients = Arc::clone(&self.clients);
-                let on_message = self.on_message.clone();
-                let on_disconnect = self.on_disconnect.clone();
+            let clients = Arc::clone(&self.clients);
+            let on_message = Arc::clone(&self.on_message);
+            let on_disconnect = Arc::clone(&self.on_disconnect);
+            let name_clone = name.clone();
 
-                thread::spawn(move || {
-                    for line in reader.lines() {
-                        let line = match line {
-                            Ok(msg) => msg,
-                            Err(_) => break,
-                        };
-                        on_message(&name, &line);
+            thread::spawn(move || {
+                for msg in reader.lines().map_while(Result::ok) {
+                    (on_message)(&name_clone, &msg);
 
-                        let clients_lock = clients.lock().unwrap();
-                        for (other_name, client_stream) in clients_lock.iter() {
-                            if other_name != &name {
-                                let _ = writeln!(
-                                    &mut client_stream.try_clone().unwrap(),
-                                    "[{}]: {}",
-                                    name,
-                                    line
-                                );
+                    let clients_lock = clients.lock().unwrap();
+                    for (other_name, client_stream) in clients_lock.iter() {
+                        if other_name != &name_clone {
+                            if let Ok(mut other_stream) = client_stream.try_clone() {
+                                let _ = writeln!(other_stream, "[{}]: {}", name_clone, msg);
                             }
                         }
                     }
+                }
 
-                    on_disconnect(&name);
-                    clients.lock().unwrap().remove(&name);
-                });
-            }
+                (on_disconnect)(&name_clone);
+                clients.lock().unwrap().remove(&name_clone);
+            });
         }
     }
 }

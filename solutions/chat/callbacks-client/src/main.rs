@@ -1,11 +1,12 @@
 use std::io::{self, BufRead, BufReader, Write};
 use std::net::TcpStream;
+use std::sync::Arc;
 use std::thread;
 
 struct ChatClient {
-    on_connect: Box<dyn Fn() + Send + Sync>,
-    on_message: Box<dyn Fn(&str) + Send + Sync>,
-    on_disconnect: Box<dyn Fn() + Send + Sync>,
+    on_connect: Arc<Box<dyn Fn() + Send + Sync>>,
+    on_message: Arc<Box<dyn Fn(&str) + Send + Sync>>,
+    on_disconnect: Arc<Box<dyn Fn() + Send + Sync>>,
 }
 
 impl ChatClient {
@@ -16,9 +17,9 @@ impl ChatClient {
         F3: Fn() + Send + Sync + 'static,
     {
         ChatClient {
-            on_connect: Box::new(on_connect),
-            on_message: Box::new(on_message),
-            on_disconnect: Box::new(on_disconnect),
+            on_connect: Arc::new(Box::new(on_connect)),
+            on_message: Arc::new(Box::new(on_message)),
+            on_disconnect: Arc::new(Box::new(on_disconnect)),
         }
     }
 
@@ -26,22 +27,21 @@ impl ChatClient {
         let mut stream = TcpStream::connect(address)?;
         (self.on_connect)();
 
-        // Send username first
         writeln!(stream, "{}", username)?;
 
-        let mut stream_clone = stream.try_clone()?;
+        let stream_clone = stream.try_clone()?;
 
-        let on_message = self.on_message.clone();
-        let on_disconnect = self.on_disconnect.clone();
+        // Clone the Arc pointers (cheap, shared ownership)
+        let on_message = Arc::clone(&self.on_message);
+        let on_disconnect = Arc::clone(&self.on_disconnect);
 
-        // Thread to receive messages
         thread::spawn(move || {
             let reader = BufReader::new(stream_clone);
             for line in reader.lines() {
                 match line {
-                    Ok(msg) => on_message(&msg),
+                    Ok(msg) => (on_message)(&msg),
                     Err(_) => {
-                        on_disconnect();
+                        (on_disconnect)();
                         break;
                     }
                 }
@@ -66,7 +66,6 @@ fn main() {
         || println!("Disconnected from server"),
     );
 
-    // You can prompt for username, or hardcode for test:
     println!("Enter your username:");
     let mut username = String::new();
     std::io::stdin().read_line(&mut username).unwrap();
