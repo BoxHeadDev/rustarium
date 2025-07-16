@@ -18,4 +18,5 @@ members = [
 "solutions/chat/callbacks-client", "solutions/chat/callbacks-server",
 "solutions/chat/threads-server", "solutions/chat/threads-client",
 "solutions/chat/blocking-client", "solutions/chat/blocking-server",
+"solutions/threadpools/fixed", "solutions/threadpools/cached", "solutions/threadpools/work-stealing", "solutions/threadpools/priority", "solutions/threadpools/event-driven", "solutions/threadpools/cpu-io-bound",
 ]

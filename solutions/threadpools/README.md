@@ -7,7 +7,7 @@
 - Simple, predictable resource usage.
 - Good for most web servers, job queues.
 
-> Examples: `BasicThreadPool`, `MutexThreadPool`, Java's `Executors.newFixedThreadPool`
+> Exercise name: `fixed`
 
 ---
 
@@ -16,7 +16,7 @@
 - Threads may time out and terminate after inactivity.
 - Balances resource use and responsiveness.
 
-> Example name: `ElasticThreadPool`, `CachedThreadPool`
+> Exercise name: `cached`
 
 ---
 
@@ -26,7 +26,7 @@
 - Improves load balancing and CPU utilization.
 
 > Real-world use: Rayon, Tokio, Java ForkJoinPool  
-> Example name: `StealingThreadPool`, `ForkJoinPool`
+> Exercise name: `work-stealing`
 
 ---
 
@@ -35,7 +35,7 @@
 - Higher-priority jobs are executed before others.
 - Requires priority queue.
 
-> Example name: `PriorityThreadPool`
+> Exercise name: `priority`
 
 ---
 
@@ -43,8 +43,8 @@
 - Threads wait on async IO events, not blocked on CPU tasks.
 - Not a traditional thread pool — more like an executor for IO.
 
+> Exercise name: `event-driven`
 > Example: Tokio runtime, async-std  
-> Name idea: `AsyncThreadPool`, `IoExecutor`
 
 ---
 
@@ -52,7 +52,7 @@
 - Separate pools optimized for CPU-heavy and IO-heavy workloads.
 - Avoids starving CPU-bound tasks with blocking IO.
 
-> Example names: `CpuThreadPool`, `IoThreadPool`
+> Exercise name: `cpu-io-bound`
 
 ---
 
@@ -70,7 +70,7 @@
 - Only one thread executes all tasks sequentially.
 - Useful for testing, debugging, or predictable environments.
 
-> Example name: `SingleThreadExecutor`
+> Exercise name: `SingleThreadExecutor`
 
 ---
 
@@ -78,7 +78,7 @@
 - Spawns one thread per core (no oversubscription).
 - May pin threads to cores using `core_affinity` or `num_cpus`.
 
-> Example name: `CoreThreadPool`, `AffinityThreadPool`
+> Exercise name: `CoreThreadPool`, `AffinityThreadPool`
 
 ---
 
@@ -86,7 +86,7 @@
 - Groups tasks into batches for execution.
 - Useful in GPU workloads or bulk-parallel data processing.
 
-> Example name: `BatchThreadPool`, `VectorizedExecutor`
+> Exercise name: `BatchThreadPool`, `VectorizedExecutor`
 
 ---
 
