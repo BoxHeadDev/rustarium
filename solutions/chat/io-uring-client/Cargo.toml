@@ -1,8 +1,0 @@
-[package]
-name = "io-uring-client-solution"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
-io-uring = "0.6"
-anyhow = "1.0"

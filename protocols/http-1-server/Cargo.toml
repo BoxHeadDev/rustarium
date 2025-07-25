@@ -1,0 +1,7 @@
+[package]
+name = "http-1-server"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+mime_guess = "2.0"

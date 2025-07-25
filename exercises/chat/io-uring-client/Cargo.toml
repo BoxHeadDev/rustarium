@@ -1,9 +1,0 @@
-[package]
-name = "io-uring-client-exercise"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
-tokio-uring = "0.4"
-bytes = "1.6"
-futures = "0.3"

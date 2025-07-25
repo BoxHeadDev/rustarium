@@ -1,22 +1,28 @@
 [workspace]
 resolver = "2"
 members = [
-"exercises/guess_number",
-"exercises/fibonacci_number",
-"exercises/grep",
-"exercises/multithreaded_server",
-"exercises/clap",
-"solutions/guess_number",
-"solutions/fibonacci_number",
-"solutions/grep",
-"solutions/multithreaded_server",  
-"solutions/clap",
-"solutions/chat/epoll-client", "solutions/chat/epoll-server",
-"solutions/chat/io-uring-server", "solutions/chat/io-uring-client",
-"solutions/chat/futures-client", "solutions/chat/futures-server",
-"solutions/chat/state-machine-server", "solutions/chat/state-machine-client",
-"solutions/chat/callbacks-client", "solutions/chat/callbacks-server",
-"solutions/chat/threads-server", "solutions/chat/threads-client",
-"solutions/chat/blocking-client", "solutions/chat/blocking-server",
-"solutions/threadpools/fixed", "solutions/threadpools/cached", "solutions/threadpools/work-stealing", "solutions/threadpools/priority", "solutions/threadpools/event-driven", "solutions/threadpools/cpu-io-bound",
+"grep",
+"multithreaded_server",  
+"clap",
+
+"chat/epoll-client", "chat/epoll-server",
+"chat/io-uring-server", "chat/io-uring-client",
+"chat/futures-client", "chat/futures-server",
+"chat/state-machine-server", "chat/state-machine-client",
+"chat/callbacks-client", "chat/callbacks-server",
+"chat/threads-server", "chat/threads-client",
+"chat/blocking-client", "chat/blocking-server",
+
+"protocols/http-1-client", "protocols/http-1-server",
+"protocols/http-2-client", "protocols/http-2-server",
+
+"serde/file_bson", "serde/file_json",
+"serde/vec_bson", "serde/vec_json", "serde/vec_ron",
+
+"threadpools/fixed",
+"threadpools/cached",
+"threadpools/work-stealing",
+"threadpools/priority",
+"threadpools/event-driven",
+"threadpools/cpu-io-bound", 
 ]

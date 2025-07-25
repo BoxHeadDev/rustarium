@@ -16,3 +16,24 @@ There are many variations on how to implement this:
 - callbacks
 - futures
 - manually-coded state machines
+
+### Servers
+- UDP (file transfer)
+- TCP (chat)
+- gRPC
+- HTTP
+- TCP
+- GraphQL
+
+### Protocols
+- RESP (+ Tcp)
+- Protocol Buffers (+ gRPC)
+- JSON (+ HTTP)
+- MessagePack
+- CapNProto
+- Custom
+
+### Async 
+- Tokio
+- Async Std
+- Futures 
