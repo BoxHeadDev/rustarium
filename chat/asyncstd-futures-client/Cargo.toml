@@ -1,5 +1,5 @@
 [package]
-name = "futures-client"
+name = "asyncstd-futures-client"
 version = "0.1.0"
 edition = "2024"
 

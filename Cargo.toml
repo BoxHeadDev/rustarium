@@ -7,11 +7,13 @@ members = [
 
 "chat/epoll-client", "chat/epoll-server",
 "chat/io-uring-server", "chat/io-uring-client",
-"chat/futures-client", "chat/futures-server",
+"chat/asyncstd-futures-client", "chat/asyncstd-futures-server",
 "chat/state-machine-server", "chat/state-machine-client",
 "chat/callbacks-client", "chat/callbacks-server",
 "chat/threads-server", "chat/threads-client",
 "chat/blocking-client", "chat/blocking-server",
+"chat/tokio-async-client", "chat/tokio-async-server",
+"chat/tokio-futures-client", "chat/tokio-futures-server",
 
 "protocols/http-1-client", "protocols/http-1-server",
 "protocols/http-2-client", "protocols/http-2-server",
